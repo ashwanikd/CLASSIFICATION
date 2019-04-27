@@ -8,6 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 
+/**
+ * @author ashwani kumar dwivedi
+ * @version 1.0
+ */
+
 public class Classifier {
     Table data;
     double[] weight;

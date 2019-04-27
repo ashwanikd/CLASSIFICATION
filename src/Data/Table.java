@@ -1,26 +1,71 @@
 package Data;
 
+// import statements
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 
+/**
+ * @author ashwani kumar dwivedi
+ * @version 1.0
+ */
+
+/**
+ * Table class to store the data in table format
+ * <p>
+ *     the data is treated as the table of attrbutes as columns and values as rows.
+ *     each row is stored as a list of values.
+ *     attribute values are stored in an array.
+ * </p>
+ * @since 1.0
+ */
 public class Table {
+    /**
+     * list columns used to store the attribute names
+     */
     public LinkedList<String> columns;
+    /**
+     * list records is a list of records in the database
+     */
     public LinkedList<Record> records;
+    /**
+     * stores the number of columns
+     */
     public int NumberOfColumns;
+    /**
+     * store number of records in the table
+     */
     public int NumberOfRecords;
 
+    /**
+     * constructor initializes the variables
+     *
+     * @param numberofcolumns number of columns if already known
+     */
     public Table(int numberofcolumns){
         NumberOfColumns = numberofcolumns;
         columns = new LinkedList<>();
         records = new LinkedList<>();
     }
 
+    /**
+     * defaukt constructor
+     */
     public Table(){
         records = new LinkedList<>();
     }
 
+    /**
+     * function for reading the data from csv file.
+     * <p>
+     *     the data entered in each row should be real valued except
+     *     the first row that is he attribute names.
+     * </p>
+     * @param filepath string containing the path of the csv file to read
+     * @since 1.0
+     */
     public void readCSV(String filepath){
         FileInputStream fin;
         try {
@@ -97,6 +142,10 @@ public class Table {
     }
     //****************************************************************************************************************//
     int[] columnLength;
+
+    /**
+     * function used to print the data n the console
+     */
     public void printData(){
         for(int i=0;i<NumberOfColumns;i++){
             System.out.print(columns.get(i)+" |");
@@ -119,6 +168,14 @@ public class Table {
         }
     }
     //****************************************************************************************************************//
+
+    /**
+     * function to plot the data
+     * <p>
+     *     if the data have only three attributes and first two attributes
+     *     can be assumed as the x and y values then only the function can be used.
+     * </p>
+     */
     public void plotXY(){
         if(NumberOfColumns>3){
             System.out.println("Graph Not possible for this number of attributes");

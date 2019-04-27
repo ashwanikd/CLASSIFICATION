@@ -10,6 +10,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * @author ashwani kumar dwivedi
+ * @version 1.0
+ */
+
 public class ScatterPlot extends Frame implements GLEventListener {
 
     GLProfile profile;

@@ -1,5 +1,10 @@
 package Data;
 
+/**
+ * @author ashwani kumar dwivedi
+ * @version 1.0
+ */
+
 public class Record {
     public Cell[] data;
     public int N;
