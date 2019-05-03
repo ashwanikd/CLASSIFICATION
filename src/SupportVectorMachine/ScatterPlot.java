@@ -24,7 +24,7 @@ public class ScatterPlot extends Frame implements GLEventListener {
     GL2 gl;
     Table table;
     double tx,ty,sx,sy,w1,w2,b,minx,maxx;
-    double edging=1.0;
+    double edging=1.2;
 
     public ScatterPlot(Table table,double w1,double w2,double b){
         this.table = table;
@@ -46,7 +46,7 @@ public class ScatterPlot extends Frame implements GLEventListener {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         animator = new FPSAnimator(canvas,300,true);
 
-        this.setSize(d);
+        this.setSize(500,500);
         this.setVisible(true);
         this.add(canvas);
     }
@@ -70,12 +70,17 @@ public class ScatterPlot extends Frame implements GLEventListener {
 
         gl.glBegin(GL2.GL_POINTS);
         for(int i=0;i<table.records.size();i++){
+            if(1 == (double)table.records.get(i).data[table.NumberOfColumns-1].data){
+                gl.glColor3d(0,1,0);
+            }else {
+                gl.glColor3d(1,0,0);
+            }
             gl.glVertex3d((((double)table.records.get(i).data[0].data)-tx)/sx,((double)table.records.get(i).data[1].data-ty)/sy,0);
         }
         gl.glEnd();
 
         gl.glBegin(GL2.GL_LINES);
-        gl.glColor3d(1,0,0);
+        gl.glColor3d(1,1,0);
         gl.glVertex3d((minx-tx)/sx,(((b-(w1*minx))/w2)-ty)/sy,0);
         gl.glVertex3d((maxx-tx)/sx,(((b-(w1*maxx))/w2)-ty)/sy,0);
         gl.glEnd();
@@ -84,7 +89,7 @@ public class ScatterPlot extends Frame implements GLEventListener {
     }
 
     void setTransformationValues(){
-        double minx=Double.POSITIVE_INFINITY,maxx=0,miny=Double.POSITIVE_INFINITY,maxy=0;
+        double minx=Double.POSITIVE_INFINITY,maxx=Double.NEGATIVE_INFINITY,miny=Double.POSITIVE_INFINITY,maxy=Double.NEGATIVE_INFINITY;
         for(int i=0;i<table.records.size();i++){
             if(minx > (double)table.records.get(i).data[0].data){
                 minx = (double)table.records.get(i).data[0].data;

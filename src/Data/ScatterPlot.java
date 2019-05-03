@@ -15,15 +15,30 @@ import java.awt.event.WindowEvent;
 
 public class ScatterPlot extends Frame implements GLEventListener {
 
+    /**
+     * related to graphics
+     */
     GLProfile profile;
     GLCanvas canvas;
     GLCapabilities capabilities;
     FPSAnimator animator;
     GL2 gl;
     Table table;
+    /**
+     * transformation variables
+     * @variable tx,ty "translation in x and y direction"
+     * @variable sx,sy "scaling in x and y direction"
+     */
     double tx,ty,sx,sy;
+    /**
+     * for edging in x and y direction
+     */
     double edging=1.2;
 
+    /**
+     * constructor
+     * @param table data to be plotted
+     */
     public ScatterPlot(Table table){
         this.table = table;
         setTransformationValues();
@@ -42,7 +57,7 @@ public class ScatterPlot extends Frame implements GLEventListener {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         animator = new FPSAnimator(canvas,300,true);
 
-        this.setSize(d);
+        this.setSize(500,500);
         this.setVisible(true);
         this.add(canvas);
     }
@@ -55,6 +70,10 @@ public class ScatterPlot extends Frame implements GLEventListener {
     public void dispose(GLAutoDrawable glAutoDrawable) {
     }
 
+    /**
+     * drawing graphics
+     * @param glAutoDrawable drawable object
+     */
     @Override
     public void display(GLAutoDrawable glAutoDrawable) {
         gl = glAutoDrawable.getGL().getGL2();
@@ -73,6 +92,10 @@ public class ScatterPlot extends Frame implements GLEventListener {
         gl.glFlush();
     }
 
+    /**
+     * for setting transformation values
+     * tx,ty,sx,sy for further drawing
+     */
     void setTransformationValues(){
         double minx=Double.POSITIVE_INFINITY,maxx=0,miny=Double.POSITIVE_INFINITY,maxy=0;
         for(int i=0;i<table.records.size();i++){

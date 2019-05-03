@@ -51,7 +51,7 @@ public class Table {
     }
 
     /**
-     * defaukt constructor
+     * default constructor
      */
     public Table(){
         records = new LinkedList<>();
@@ -144,6 +144,7 @@ public class Table {
     int[] columnLength;
 
     /**
+     * @since 1.0
      * function used to print the data n the console
      */
     public void printData(){
@@ -175,6 +176,7 @@ public class Table {
      *     if the data have only three attributes and first two attributes
      *     can be assumed as the x and y values then only the function can be used.
      * </p>
+     * @since 1.0
      */
     public void plotXY(){
         if(NumberOfColumns>3){

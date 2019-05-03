@@ -6,12 +6,25 @@ package Data;
  */
 
 public class Record {
+    /**
+     * an array of data
+     */
     public Cell[] data;
+
+    /**
+     * stores the number of columns
+     */
     public int N;
     Record(int numberofcolumns){
         N = numberofcolumns;
         data = new Cell[N];
     }
+
+    /**
+     * for setting the value
+     * @param index position
+     * @param value value to put
+     */
     void set(int index,String value){
         data[index] = new Cell(value);
     }

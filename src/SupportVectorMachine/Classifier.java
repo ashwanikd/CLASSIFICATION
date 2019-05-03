@@ -13,18 +13,44 @@ import java.util.LinkedList;
  * @version 1.0
  */
 
+/**
+ * <p>
+ *     %%%%%%%%%%%%%%%%%% Support Vector Machine Classifier %%%%%%%%%%%%%%%%%%%%%%%%%%
+ *     %                classifier for linearly seperable data                       %
+ *     %    the given data must be binary classification for classification to work  %
+ *     %            since this is the initial stage of development                   %
+ *     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * </p>
+ */
 public class Classifier {
+    // stores the data
     Table data;
+    // stores the weights of hyperplane
     double[] weight;
+    // bias value of hyperplane
     double bias;
+    // stores the classes
     LinkedList<Double> classes;
+    /**
+     * <p>
+     *     gradient descent used for optimization of
+     *     langrangian function and hence the maximum cost for convergence
+     * </p>
+     */
     final int MAXIMUMITERATIONS = 50000;
-    final double MAXALPHA = 10;
+    /**
+     * stores the accuracy of model
+     */
     double Accuracy;
 
+    /**
+     * constructor for model
+     * @param database the data used
+     */
     public Classifier(Table database){
 
         classes = new LinkedList<>();
+
         //copying the data
         System.out.println("Copying data...");
         data = new Table();
@@ -75,6 +101,10 @@ public class Classifier {
     double lambda = 0.05;
     double alpha = 0.5;
     double deltab = 0;
+
+    /**
+     * starts the algorithm to find the hyperplane
+     */
     void algorithm(){
         System.out.println("Algorithm running...");
         gradient = new double[data.NumberOfColumns-1];
@@ -97,24 +127,36 @@ public class Classifier {
                 "Number of Iterations done: "+iterations+"\n");
     }
 
+    /**
+     * detect if the change is insignificant in the weights and bias
+     * @return boolean value
+     */
     boolean insignificantChange(){
         for(int i=0;i<data.NumberOfColumns-1;i++){
-            if(mod(alpha*gradient[i])>0.00001){
+            if(mod(alpha*gradient[i])>0.0001){
                 return false;
             }
         }
-        if(mod(alpha*deltab)>0.00001){
+        if(mod(alpha*deltab)>0.0001){
             return false;
         }
         return true;
     }
 
+    /**
+     * returns the modulus of x
+     * @param x
+     * @return
+     */
     double mod(double x){
         if(x>0){
             return x;
         }else return -x;
     }
 
+    /**
+     * calculates the current gradient and stores it in gradient vector(array)
+     */
     void calculateGradient(){
         int last = data.NumberOfColumns-1;
         double temp;
@@ -142,7 +184,9 @@ public class Classifier {
         deltab /= (double)data.NumberOfRecords;
     }
 
-    //****************************************************************************************************************//
+    /**
+     * prints the weight vector of hyperplane
+     */
     public void printWeightVector(){
         for(int i=0;i<data.NumberOfColumns-1;i++){
             System.out.print(weight[i]+" ");
@@ -151,6 +195,13 @@ public class Classifier {
         System.out.println(bias);
     }
     //*************************************************PREDICTION*****************************************************//
+
+    /**
+     * predicts the class based on currents model
+     * @param vector attributes of the data of which the class is to be predicted
+     * @return the class of coressponding tuple
+     * @since 1.0
+     */
     public double predict(double[] vector){
         double x=0;
         for(int i=0;i<data.NumberOfColumns-1;i++){
@@ -170,6 +221,11 @@ public class Classifier {
     }
 
     //**************************************ACCURACY ON TRAINING******************************************************//
+
+    /**
+     * measures the accuracy on the training data
+     * stores accuracy in accuracy variable
+     */
     void accuracyMeasure(){
         int acc=0;
         double[] x = new double[data.NumberOfColumns-1];
@@ -185,6 +241,12 @@ public class Classifier {
         System.out.println("Accuracy on Training data: "+acc+"/"+data.records.size()+"("+(Accuracy*100)+"%)\n");
     }
     //***************************************TESTING FROM FILE********************************************************//
+
+    /**
+     * testing the data from a csv file
+     * @param filepath path to file containing test values
+     * @since 1.0
+     */
     public void testCSVFile(String filepath){
         FileInputStream fin;
         try {
@@ -220,6 +282,11 @@ public class Classifier {
         }
     }
     //********************************************PLOTTING************************************************************//
+
+    /**
+     * plots the data along with hyperplane only if data is two dimensional
+     *
+     */
     public void plotLine(){
         new ScatterPlot(data,weight[0],weight[1],bias);
     }
